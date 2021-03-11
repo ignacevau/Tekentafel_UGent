@@ -1,7 +1,7 @@
 # Tekentafel_UGent
-UGent ingenieursproject 2
+<i>UGent ingenieursproject 2</i>
 
-<h5>git remote opzetten</h5><br/>
+<h2>git remote opzetten</h2>
 open linux terminal in de juiste folder:
 
 // maak .git folder aan
