@@ -5,36 +5,36 @@
 open linux terminal in de juiste folder:
 
 // maak .git folder aan
-<i>git init</i>
+\n<i>git init</i>
 
 // connect de remote en test
-<i>git remote add origin https://github.com/ignacevau/Tekentafel_UGent</i>
-<i>git fetch origin</i>
-<i>git remote -v</i>
+\n<i>git remote add origin https://github.com/ignacevau/Tekentafel_UGent</i>
+\n<i>git fetch origin</i>
+\n<i>git remote -v</i>
 
 om te pullen type
-<i>git pull origin master</i>
+\n<i>git pull origin master</i>
 
 of type
-<i>git branch --set-upstream-to=origin/master master</i>
+\n<i>git branch --set-upstream-to=origin/master master</i>
 
 en dan kan je gwn dit typen
-<i>git pull</i>
+\n<i>git pull</i>
 
 om je local files te vergelijken met de origin type
-<i>git status</i>
+\n<i>git status</i>
 
 om te pushen naar origin voegt ge eerst u files toe
-<i>git add .</i>
+\n<i>git add .</i>
 
 dan committen
-<i>git commit -m "type hier u message bvb blabla error gefixt"</i>
+\n<i>git commit -m "type hier u message bvb blabla error gefixt"</i>
 
 dan u commits pushen naar origin
-<i>git push</i>
+\n<i>git push</i>
 
 ait da is alles denkik gwn zorgen da ge eerst een pull doet voorda ge begint te coden
 
 btwww als ge u credentials ng nie in global hebt gezet dan moet ge da eerst doen voorda ge kunt pushen
-<i>git config --global user.email "u email adres"</i>
-<i>git config --global user.name "u github naam"</i>
+\n<i>git config --global user.email "u email adres"</i>
+\n<i>git config --global user.name "u github naam"</i>
