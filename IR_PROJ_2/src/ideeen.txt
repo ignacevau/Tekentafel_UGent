@@ -1,0 +1,14 @@
+- lcd scherm toont instructies bv: tekenarm gaat buiten maximaal bereik
+- cirkelprogramma met alleen middelpunt en beginpunt
+- rechthoek
+
+
+
+opmerkingen:
+    -delay bij tekenen?
+    -cirkel snijdt deel af...
+
+eindproject:
+    - oxo spelen met knopjes
+    - svg files tekenen
+    - portret tekenen
