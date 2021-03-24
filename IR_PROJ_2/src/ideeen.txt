@@ -6,7 +6,6 @@
 
 opmerkingen:
     -delay bij tekenen?
-    -cirkel snijdt deel af...
 
 eindproject:
     - oxo spelen met knopjes

@@ -1,4 +1,5 @@
-
+#ifndef _IK_HEADER_
+#define _IK_HEADER_
 #include <IK.h>
 
 const float L1 = 12.4f;
@@ -21,5 +22,6 @@ float  getAlpha2FromCoords(float x, float y) {
 }
 
 float getDelayFromAngle(float angle) {
-    return ((2.3-0.7)/PI)*angle + 0.7;
+    return ((2.3 - 0.7) / PI) * angle + 0.7;
 }
+#endif

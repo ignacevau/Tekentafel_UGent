@@ -1,11 +1,8 @@
 #include <avr/io.h>
-#include <util/delay.h>
 #include <avr/interrupt.h>
-#include <math.h>
-#include <IK.h>
+#include <Draw.h>
 
 #define PERIODE 20.0f
-#define DISTANCE(x1, y1, x2, y2) sqrt(((x2)-(x1))*((x2)-(x1)) + ((y2)-(y1))*((y2)-(y1)))
 
 typedef unsigned char bool;
 static const bool False = 0;
@@ -17,10 +14,9 @@ static const bool True = 1;
 2: tweede delay
 */
 volatile int motor_state = 1;
-volatile int angle_berekend = 0;
 
-float delay1 = 0.7f;
-float delay2 = 0.7f;
+float offset1 = +0.0f;
+float offset2 = -0.11f;
 
 void SetRegisters(){
 
@@ -64,7 +60,7 @@ ISR(TIMER1_COMPA_vect) {
             PORTC &= ~(1<<PC1);
             
             // pas OCR-register aan zodat de tijd tot volgende interrupt de 20 ms (periode) volmaakt
-            setOCR(PERIODE-(delay1+delay2));
+            setOCR(PERIODE-((delay1+offset1)+(delay2+offset2)));
             motor_state = 1;
 
             // maken het weer mogelijk om de volgende hoek te berekenen(zie DRAW-functies)
@@ -75,7 +71,7 @@ ISR(TIMER1_COMPA_vect) {
             PORTC |= (1<<PC0);
 
             // pas OCR-register aan zodat de tijd tot volgende interrupt de lengte delay 1 bedraagt
-            setOCR(delay1);
+            setOCR(delay1+offset1);
             motor_state = 2;
             break;
         case 2:
@@ -86,42 +82,13 @@ ISR(TIMER1_COMPA_vect) {
             PORTC |= (1<<PC1);
 
             // pas OCR-register aan zodat de tijd tot volgende interrupt de lengte delay 1 bedraagt
-            setOCR(delay2);
+            setOCR(delay2+offset2);
             motor_state = 0;
             break;
     }
 }
 
 
-
-void drawLine(float x1, float y1, float x2, float y2) {
-    /*
-    alpha11 = hoek motor1, begincoordinaten(situatie 1)
-    alpha12 = hoek motor1, eindcoordinaten (situatie 2)
-    alpha21 = hoek motor2, begincoordinaten(situatie 1)
-    alpha22 = hoek motor2, eindcoordinaten (situatie 2)
-    */
-
-    float alpha11 = getAlpha1FromCoords(x1, y1), alpha12 = getAlpha2FromCoords(x1, y1); 
-    float alpha21 = getAlpha1FromCoords(x2, y2), alpha22 = getAlpha2FromCoords(x2, y2);
-    
-
-    double i = 0;
-    double iterations = (double)(5*DISTANCE(x1, y1, x2, y2));
-    while(i < iterations) {
-        if (!angle_berekend) {
-            double fac = i/iterations;
-            delay1 = getDelayFromAngle(alpha11 + fac*(alpha21-alpha11));
-            delay2 = getDelayFromAngle(alpha12 + fac*(alpha22-alpha12));
-
-            angle_berekend = 1;
-
-            i++;
-
-            _delay_ms(0.1);
-        }
-    }
-}
 
 double estimateBezierLength(float x0, float y0, float x1, float y1, float x2, float y2, int precision) {
     double length = 0.0f;
@@ -176,8 +143,42 @@ void Go_to_Coords(float x, float y){
         angle_berekend = 1;
     }
 }
+//circeltekende functie vanuit een middelpunt en beginpunt
+void drawPartialCircle(float x1, float y1, bool wijzerszin, float sectie, float x0, float y0){
+    float r = DISTANCE(x0, y0, x1, y1);
+    // Zorg dat alle cirkels even snel getekend worden
+    double iterations = (double)(50*r*sectie);
+    double beginhoek = PI/2 - acos((x1-x0)/r);
+    
+    double i = 0; // teller in while-loop
+    while( i < iterations) {
+        if (!angle_berekend) {      // zolang de volledige periode van 20 ms nog niet om zijn (zie ISR) : wachten
+            
+            float t = (i*(2*PI) * sectie * (wijzerszin?-1:1))/iterations + beginhoek;
+            float x = r * cos(t) + x1;
+            float y = r * sin(t) + y1;
+            
+            float alpha1 = getAlpha1FromCoords(x, y);
+            float alpha2 = getAlpha2FromCoords(x, y);
+            
+            //pas delays aan zodat het OCR register juist kan aangepast worden
+            delay1 = getDelayFromAngle(alpha1);
+            delay2 = getDelayFromAngle(alpha2);
 
-void drawCircle(float r, float x1, float y1, bool wijzerszin, float sectie) {
+            angle_berekend = 1;
+
+            i++;
+
+            _delay_ms(0.1);
+        }
+    }
+    
+
+}
+
+
+//circeltekende functie vanuit beginpunt en straal
+void drawCircle(float x1, float y1, bool wijzerszin, float sectie, float r) {
     // Zorg dat alle cirkels even snel getekend worden
     double iterations = (double)(50*r*sectie);
 
@@ -205,21 +206,34 @@ void drawCircle(float r, float x1, float y1, bool wijzerszin, float sectie) {
     }
 }
 
+// pt1 and pt3 are opposites
+void drawRectangle(float x1, float y1, float x2, float y2, float x3, float y3) {
+    float x4 = x1 + x3 - x2;
+    float y4 = y1 + y3 - y2;
+
+    drawLine(x1, y1, x2, y2);
+    drawLine(x2, y2, x3, y3);
+    drawLine(x3, y3, x4, y4);
+    drawLine(x4, y4, x1, y1);
+}
+
 int main(void)
 {
     // zet registers goed:
     SetRegisters();
     setOCR(PERIODE);
 
+    // Go_to_Coords(10.0f, 2.0f);
+
     // drawCircle(4.0f, 6.0f, 5.0f, False, 1.0f);
     // drawBezier(1.0f, 1.0f, 0.0f, 10.0f, 10.0f, 10.0f);
     // drawBezier(10.0f, 10.0f, 8.0f, 8.0f, 5.0f, 5.0f);
-    drawLine(0.1f, 0.1f, 10.0f, 10.0f);
+    // drawLine(0.1f, 0.1f, 10.0f, 10.0f);
 
-    // while (1)
-    // {
-        
-    //     // Go_to_Coords(0.0f, 0.0f);
+    // drawRectangle(2.0f, 10.0f, 2.0f, 2.0f, 10.0f, 2.0f);
+
+    while (1)
+    {
     //     //_delay_ms(1000);
 
     //     // drawLine(0.1f, 0.1f, 10.0f, 10.0f);
@@ -227,7 +241,14 @@ int main(void)
     //     // drawBezier(1.0f, 1.0f, 0.0f, 10.0f, 10.0f, 10.0f);
 
     //     _delay_ms(0.1);
-    // }
+
+        // drawPartialCircle(5.0f, 5.0f, True, 1.0f, 2.0f, 5.0f);
+        // drawRectangle(2.0f, 10.0f, 2.0f, 2.0f, 10.0f, 2.0f);
+        
+        drawLine(2.0f, 2.0f, 10.0f, 2.0f);
+        // draw_partial_Circle(10.0f,5.0f, True, 0.5f,8.0f,3.0f);
+        drawLine(10.0f, 2.0f, 2.0f, 2.0f);
+    }
 
     return 0;
 }
