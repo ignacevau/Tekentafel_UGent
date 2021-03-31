@@ -28,7 +28,7 @@ ISR(TIMER1_COMPA_vect) {
             PORTF &= ~(1<<PF0);
             
             // pas OCR-register aan zodat de tijd tot volgende interrupt de 20 ms (periode) volmaakt
-            setOCR(PERIODE-((delay1+offset1)+(delay2+offset2)));
+            setOCR(PERIODE-((delay1+offset1)+(delay2+offset2) + delay3));
             motor_state = 1;
 
             // maken het weer mogelijk om de volgende hoek te berekenen(zie DRAW-functies)
