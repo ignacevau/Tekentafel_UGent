@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "ik.h": "c",
+        "rectangle.h": "c",
+        "draw.h": "c"
+    }
+}

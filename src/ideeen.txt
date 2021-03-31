@@ -1,6 +1,4 @@
 - lcd scherm toont instructies bv: tekenarm gaat buiten maximaal bereik
-- cirkelprogramma met alleen middelpunt en beginpunt
-- rechthoek
 
 
 
