@@ -93,6 +93,9 @@ void setRegisters() {
     TCCR1B &= ~_BV(CS12);
     TCCR1B &= ~_BV(CS10);
     TCCR1B |= _BV(CS11);
+
+
+    // Zet registers voor bluetooth ontvangst
 }
 
 // Deze functie zet het OCR-register op een bepaalde waarde in functie van de prescaling (zie setRegisters) en van de delays (zie ISR)
