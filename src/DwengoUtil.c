@@ -74,7 +74,7 @@ void setRegisters() {
     PORTF &= ~(1<<PF0);
 
 
-    SREG |= (1<<SREG_I); // Zet global interrupts aan
+    // SREG |= (1<<SREG_I); // Zet global interrupts aan
     
     // TIMER INTERRUPT
     TIMSK1 |= (1<<OCIE1A);  // Gebruik Output Compare A Match-interrupt
@@ -93,9 +93,6 @@ void setRegisters() {
     TCCR1B &= ~_BV(CS12);
     TCCR1B &= ~_BV(CS10);
     TCCR1B |= _BV(CS11);
-
-
-    // Zet registers voor bluetooth ontvangst
 }
 
 // Deze functie zet het OCR-register op een bepaalde waarde in functie van de prescaling (zie setRegisters) en van de delays (zie ISR)
