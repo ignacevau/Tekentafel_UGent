@@ -12,6 +12,9 @@ int main(void)
     while (1)
     {
         // drawPartialCircle(6.0f, 6.0f, True, 1.0f, 4.5f, 4.5f);
+        if(Bluetooth_Receive() == 0){
+        play();
+        }
     }
 
     return 0;
