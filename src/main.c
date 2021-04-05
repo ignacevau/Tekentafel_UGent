@@ -1,5 +1,7 @@
-#include <Shapes.h>
+#include <Game.h>
 #include <DwengoUtil.h>
+#include <util/delay.h>
+#include <avr/io.h>
 
 int main(void)
 {

@@ -41,4 +41,8 @@ void drawLine(float x1, float y1, float x2, float y2) {
         // Schrijf op boardje dat niet werkt
     }
 }
+
+// void drawCross(float x, float y){
+    
+// }
 #endif
