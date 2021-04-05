@@ -1,0 +1,33 @@
+Tekengrid:
+
+ 1 | 2 | 3 
+-----------
+ 4 | 5 | 6 
+-----------
+ 7 | 8 | 9 
+
+
+8 data bits: xxyyyyzz
+
+xx: bits: 1, 2
+
+00 - start
+01 - stop
+10 - teken "O"
+11 - teken "X"
+
+
+yyyy: bits: 3, 4, 5, 6
+
+0001 - gridpositie 1
+0010 - gridpositie 2
+0011 - gridpositie 3
+...
+1001 - gridpositie 9
+
+(deze bits zijn enkel relevant als de voorgaande bits (xx) 10 of 11 zijn)
+
+
+zz: bits: 7, 8
+
+altijd 0, geven geen relevante data mee
