@@ -4,22 +4,22 @@
 #include <Bluetooth.h>
 #include <avr/io.h>
 
-#define LENGTH_GRID 14.0
-#define LENGTH_BOX LENGTH_GRID / 3
+#define LENGTH_GRID 12.0
+#define LENGTH_BOX (LENGTH_GRID/3)
 #define START_X 2.0
 #define START_Y 2.0
 #define OFFSET 0.5
-#define Complete_Circle 2 * PI
-#define Radius (LENGTH_BOX - OFFSET) /2
+#define Complete_Circle 1
+#define Radius ((LENGTH_BOX - OFFSET) /2)
 
 
 // Hier kunnen we volledige tekeningen maken (door de arm opheffen enzo)
 
 void drawGrid(){
-    drawLine(LENGTH_GRID / 3 + 2, 2, LENGTH_GRID / 3 + 2, 16);
-    drawLine(2 * LENGTH_GRID / 3 + 2, 2, 2 * LENGTH_GRID / 3 + 2, 16);
-    drawLine(2, LENGTH_GRID / 3 + 2, 16,  LENGTH_GRID / 3 + 2);
-    drawLine(2, 2 * LENGTH_GRID / 3 + 2, 16, 2 * LENGTH_GRID / 3 + 2);
+    drawLine(LENGTH_GRID / 3 + 2, 2, LENGTH_GRID / 3 + 2, 14);
+    drawLine(2 * LENGTH_GRID / 3 + 2, 2, 2 * LENGTH_GRID / 3 + 2, 14);
+    drawLine(2, LENGTH_GRID / 3 + 2, 14,  LENGTH_GRID / 3 + 2);
+    drawLine(2, 2 * LENGTH_GRID / 3 + 2, 14, 2 * LENGTH_GRID / 3 + 2);
 }
 
 void drawCross(float x, float y){
