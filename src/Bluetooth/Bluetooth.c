@@ -2,6 +2,7 @@
 #define _Bluetooth_
 
 #include <avr/io.h>
+#include <Bluetooth/Bluetooth.h>
 
 unsigned char Bluetooth_Receive() {
     // Wacht tot er data is

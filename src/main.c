@@ -1,7 +1,5 @@
 #include <Game.h>
 #include <DwengoUtil.h>
-#include <util/delay.h>
-#include <avr/io.h>
 
 int main(void)
 {
@@ -11,11 +9,8 @@ int main(void)
 
     while (1)
     {
-        playCircle(5);
-        // drawPartialCircle(6.0f, 6.0f, True, 1.0f, 4.5f, 4.5f);
-        if(Bluetooth_Receive() == 0) {
-            play();
-        }
+        // Blijf spel herhalen
+        play();
     }
 
     return 0;

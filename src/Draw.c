@@ -11,13 +11,9 @@ bool testCoord(float x, float y){
     return False;
 }
 
-void Go_to_Coords(float x, float y){
-    if(!period_started) {
-        // bereken delays
-        delay1 = getDelay1(x, y);
-        delay2 = getDelay2(x, y);
-
-        period_started = True;
-    }
+void goToCoords(float x, float y) {
+    // bereken delays
+    delay1 = getDelay1(x, y);
+    delay2 = getDelay2(x, y);
 }
 #endif

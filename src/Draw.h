@@ -6,4 +6,4 @@
 #define MAX_Y 21.0
 
 bool testCoord(float x, float y);
-void GoToCoords(float x, float y);
+void goToCoords(float x, float y);

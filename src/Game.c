@@ -1,8 +1,9 @@
 #ifndef _Game_Header_
 #define _Game_Header_
 #include <Game.h>
-#include <Bluetooth.h>
+#include <Bluetooth/Bluetooth.h>
 #include <avr/io.h>
+#include <Draw.h>
 
 #define LENGTH_GRID 12.0
 #define LENGTH_BOX (LENGTH_GRID/3)
@@ -20,11 +21,17 @@ void drawGrid(){
     drawLine(2 * LENGTH_GRID / 3 + 2, 2, 2 * LENGTH_GRID / 3 + 2, 14);
     drawLine(2, LENGTH_GRID / 3 + 2, 14,  LENGTH_GRID / 3 + 2);
     drawLine(2, 2 * LENGTH_GRID / 3 + 2, 14, 2 * LENGTH_GRID / 3 + 2);
+    goToCenter();
 }
 
 void drawCross(float x, float y){
     drawLine(x - LENGTH_BOX / 2 + OFFSET, y - LENGTH_BOX / 2 + OFFSET, x + LENGTH_BOX / 2 - OFFSET, y + LENGTH_BOX / 2 - OFFSET);
     drawLine(x - LENGTH_BOX / 2 + OFFSET, y + LENGTH_BOX / 2 - OFFSET, x + LENGTH_BOX / 2 - OFFSET, y - LENGTH_BOX / 2 + OFFSET);
+}
+
+void goToCenter(){
+    // hef op
+    goToCoords(OFFSET + LENGTH_GRID / 2, OFFSET + LENGTH_GRID / 2);
 }
 
 void playCross(int BOX){
@@ -57,7 +64,10 @@ void playCross(int BOX){
             drawCross(START_X + 5 * LENGTH_BOX / 2, START_Y + LENGTH_BOX / 2);
             break;
     }
+
+    goToCenter();
 }
+
 void playCircle(int BOX){
     float x = 0;
     float y = 0;
@@ -100,9 +110,45 @@ void playCircle(int BOX){
             break;
     }
     drawCircle(x, y, False, Complete_Circle, Radius);
+    goToCenter();
 }
-void play(){
-    drawGrid();
-    unsigned char data = Bluetooth_Receive();
+
+// Returnt True als data het stop commando is
+bool HandleBluetoothCommand(unsigned char data) {
+    unsigned char xx = data >> 6;
+    unsigned char yyyy = (data & 0b00111100)>>2;
+
+    // Stop commando
+    if (xx == 0b01)
+        return True;
+
+    // Teken X
+    if (xx == 0b11) {
+        playCross(yyyy);
+    }
+    // Teken O
+    if (xx == 0b10) {
+        playCircle(yyyy);
+    }
+
+    return False;
+}
+
+void play() {
+    unsigned char startData = Bluetooth_Receive();
+    if (startData == 0) {
+        drawGrid();
+
+        while(1) {
+            unsigned char data = Bluetooth_Receive();
+
+            bool stop = HandleBluetoothCommand(data);
+
+            if (stop){
+                goToCenter();
+                break;
+            }
+        }
+    }
 }
 #endif

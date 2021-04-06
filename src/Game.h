@@ -7,5 +7,6 @@ void drawGrid();
 void drawCross(float x, float y);
 void playCross(int BOX);
 void playCircle(int BOX);
+void goToCenter();
 
 void play();
