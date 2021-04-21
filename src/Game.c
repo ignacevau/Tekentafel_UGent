@@ -46,7 +46,7 @@ void dropPencil(float x, float y){
 void drawSingleLine(float x1, float y1, float x2, float y2) {
     elevatePencil();
     dropPencil(x1, y1);
-    drawLine(x1, y1, x2, y1);
+    drawLine(x1, y1, x2, y2);
     elevatePencil();
 }
 
