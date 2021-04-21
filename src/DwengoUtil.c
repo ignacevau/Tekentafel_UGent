@@ -15,6 +15,7 @@ float offset2 = -0.11f;
 0: periode afwachten
 1: eerste delay
 2: tweede delay
+3: derde delay
 */
 volatile int motor_state = 1;
 
@@ -23,11 +24,11 @@ volatile int motor_state = 1;
 ISR(TIMER1_COMPA_vect) {
     switch(motor_state) {
         case 0:
-            // motor 2 uit
-            PORTC &= ~(1<<PC1);
+            // Motor 3 uit
+            PORTF &= ~(1<<PF0);
             
             // pas OCR-register aan zodat de tijd tot volgende interrupt de 20 ms (periode) volmaakt
-            setOCR(PERIODE-((delay1+offset1)+(delay2+offset2)));
+            setOCR(PERIODE-((delay1+offset1)+(delay2+offset2) + delay3));
             motor_state = 1;
 
             // maken het weer mogelijk om de volgende hoek te berekenen(zie DRAW-functies)
@@ -48,8 +49,18 @@ ISR(TIMER1_COMPA_vect) {
             // motor 2 aan
             PORTC |= (1<<PC1);
 
-            // pas OCR-register aan zodat de tijd tot volgende interrupt de lengte delay 1 bedraagt
+            // pas OCR-register aan zodat de tijd tot volgende interrupt de lengte delay 2 bedraagt
             setOCR(delay2+offset2);
+            motor_state = 3;
+            break;
+        case 3:
+            // Motor 3 aan
+            PORTF |= 1<<PF0;
+            // motor 2 uit
+            PORTC &= ~(1<<PC1);
+            
+            // pas OCR-register aan zodat de tijd tot volgende interrupt de lengte delay 3 bedraagt
+            setOCR(delay3);
             motor_state = 0;
             break;
     }
