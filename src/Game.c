@@ -4,6 +4,7 @@
 #include <Bluetooth/Bluetooth.h>
 #include <avr/io.h>
 #include <Draw.h>
+#include <util/delay.h>
 
 #define LENGTH_GRID 12.0
 #define LENGTH_BOX (LENGTH_GRID/3)
@@ -12,21 +13,53 @@
 #define OFFSET 0.5
 #define Complete_Circle 1
 #define Radius ((LENGTH_BOX - OFFSET) /2)
+// Servo 3
+#define GoHIGH True
+#define HIGH 1.2
+
+#define GoLOW False
+#define LOW 1.05
+
 
 
 // Hier kunnen we volledige tekeningen maken (door de arm opheffen enzo)
+void setDelay3(bool up){
+    if (up){
+        delay3 = HIGH;
+    }
+    else{
+        delay3 = LOW;
+    }
+    
+}
+void elevatePencil(){
+    setDelay3(GoHIGH);
+    _delay_ms(500);
+}
+void dropPencil(float x, float y){
+    goToCoords(x, y);
+    _delay_ms(500);
+    setDelay3(GoLOW);
+    _delay_ms(500);
+}
+
+void drawSingleLine(float x1, float y1, float x2, float y2) {
+    elevatePencil();
+    dropPencil(x1, y1);
+    drawLine(x1, y1, x2, y1);
+}
 
 void drawGrid(){
-    drawLine(LENGTH_GRID / 3 + 2, 2, LENGTH_GRID / 3 + 2, 14);
-    drawLine(2 * LENGTH_GRID / 3 + 2, 2, 2 * LENGTH_GRID / 3 + 2, 14);
-    drawLine(2, LENGTH_GRID / 3 + 2, 14,  LENGTH_GRID / 3 + 2);
-    drawLine(2, 2 * LENGTH_GRID / 3 + 2, 14, 2 * LENGTH_GRID / 3 + 2);
+    drawSingleLine(LENGTH_GRID / 3 + 2, 2, LENGTH_GRID / 3 + 2, 14);
+    drawSingleLine(2 * LENGTH_GRID / 3 + 2, 2, 2 * LENGTH_GRID / 3 + 2, 14);
+    drawSingleLine(2, LENGTH_GRID / 3 + 2, 14,  LENGTH_GRID / 3 + 2);
+    drawSingleLine(2, 2 * LENGTH_GRID / 3 + 2, 14, 2 * LENGTH_GRID / 3 + 2);
     goToCenter();
 }
 
 void drawCross(float x, float y){
-    drawLine(x - LENGTH_BOX / 2 + OFFSET, y - LENGTH_BOX / 2 + OFFSET, x + LENGTH_BOX / 2 - OFFSET, y + LENGTH_BOX / 2 - OFFSET);
-    drawLine(x - LENGTH_BOX / 2 + OFFSET, y + LENGTH_BOX / 2 - OFFSET, x + LENGTH_BOX / 2 - OFFSET, y - LENGTH_BOX / 2 + OFFSET);
+    drawSingleLine(x - LENGTH_BOX / 2 + OFFSET, y - LENGTH_BOX / 2 + OFFSET, x + LENGTH_BOX / 2 - OFFSET, y + LENGTH_BOX / 2 - OFFSET);
+    drawSingleLine(x - LENGTH_BOX / 2 + OFFSET, y + LENGTH_BOX / 2 - OFFSET, x + LENGTH_BOX / 2 - OFFSET, y - LENGTH_BOX / 2 + OFFSET);
 }
 
 void goToCenter(){
@@ -109,7 +142,10 @@ void playCircle(int BOX){
             y = START_Y + LENGTH_BOX * 2 + OFFSET;
             break;
     }
+    elevatePencil();
+    dropPencil(x, y);
     drawCircle(x, y, False, Complete_Circle, Radius);
+
     goToCenter();
 }
 
