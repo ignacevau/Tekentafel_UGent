@@ -9,3 +9,7 @@ eindproject:
     - oxo spelen met knopjes
     - svg files tekenen
     - portret tekenen
+
+
+verslag (mogelijks in latex)
+- goeie template vinden

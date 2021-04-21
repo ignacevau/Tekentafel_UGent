@@ -173,6 +173,10 @@ bool HandleBluetoothCommand(unsigned char data) {
 }
 
 void play() {
+    // Center drawing arm
+    goToCenter();
+
+    // Wait for bluetooth start signal
     unsigned char startData = Bluetooth_Receive();
     if (startData == 0) {
         drawGrid();
