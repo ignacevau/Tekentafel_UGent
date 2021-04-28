@@ -13,3 +13,4 @@ eindproject:
 
 verslag (mogelijks in latex)
 - goeie template vinden
+- op het einde besluit

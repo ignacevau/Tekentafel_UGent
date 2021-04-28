@@ -16,7 +16,7 @@ bool testLine(float x1, float y1, float x2, float y2) {
 void drawLine(float x1, float y1, float x2, float y2) {
     if (testLine(x1, y1, x2, y2)) {
         double i = 0;
-        double iterations = (double)(5*DISTANCE(x1, y1, x2, y2));
+        double iterations = (double)(10*DISTANCE(x1, y1, x2, y2));
         while(i < iterations) {
             if (!period_started) {
                 double fac = i/iterations;

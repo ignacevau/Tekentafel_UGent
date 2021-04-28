@@ -15,10 +15,10 @@
 #define Radius ((LENGTH_BOX - OFFSET) /2)
 // Servo 3
 #define GoHIGH True
-#define HIGH 1.2
+#define HIGH 1.35
 
 #define GoLOW False
-#define LOW 1.05
+#define LOW 1.25
 
 
 
@@ -50,7 +50,7 @@ void drawSingleLine(float x1, float y1, float x2, float y2) {
     elevatePencil();
 }
 
-void drawGrid(){
+void drawGrid() {
     drawSingleLine(LENGTH_GRID / 3 + 2, 2, LENGTH_GRID / 3 + 2, 14);
     drawSingleLine(2 * LENGTH_GRID / 3 + 2, 2, 2 * LENGTH_GRID / 3 + 2, 14);
     drawSingleLine(2, LENGTH_GRID / 3 + 2, 14,  LENGTH_GRID / 3 + 2);
@@ -63,8 +63,10 @@ void drawCross(float x, float y){
     drawSingleLine(x - LENGTH_BOX / 2 + OFFSET, y + LENGTH_BOX / 2 - OFFSET, x + LENGTH_BOX / 2 - OFFSET, y - LENGTH_BOX / 2 + OFFSET);
 }
 
-void goToCenter(){
+void goToCenter() {
     // hef op
+    elevatePencil();
+
     goToCoords(OFFSET + LENGTH_GRID / 2, OFFSET + LENGTH_GRID / 2);
 }
 
@@ -120,32 +122,32 @@ void playCircle(int BOX){
             break;
         case 4:
             x = START_X + LENGTH_BOX / 2;
-            y = START_Y + LENGTH_BOX * 2 + OFFSET;
+            y = START_Y + LENGTH_BOX + OFFSET;
             break;
         case 5:
             x = START_X + 3 * LENGTH_BOX / 2;
-            y = START_Y + LENGTH_BOX * 2 + OFFSET;
+            y = START_Y + LENGTH_BOX + OFFSET;
             break;
         case 6:
             x = START_X + 5 * LENGTH_BOX / 2;
-            y = START_Y + LENGTH_BOX * 2 + OFFSET;
+            y = START_Y + LENGTH_BOX  + OFFSET;
             break;
         case 7:
             x = START_X + LENGTH_BOX / 2;
-            y = START_Y + LENGTH_BOX * 2 + OFFSET;
+            y = START_Y + OFFSET;
             break;
         case 8:
             x = START_X + 3 * LENGTH_BOX / 2;
-            y = START_Y + LENGTH_BOX * 2 + OFFSET;
+            y = START_Y  + OFFSET;
             break;
         case 9:
             x = START_X + 5 * LENGTH_BOX / 2;
-            y = START_Y + LENGTH_BOX * 2 + OFFSET;
+            y = START_Y + OFFSET;
             break;
     }
     elevatePencil();
-    dropPencil(x, y);
-    drawCircle(x, y, False, Complete_Circle, Radius);
+    dropPencil(x+Radius, y+Radius);
+    drawCircle(x, y+Radius, False, Complete_Circle, Radius);
     elevatePencil();
 
     goToCenter();
