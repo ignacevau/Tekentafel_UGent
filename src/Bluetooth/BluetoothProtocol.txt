@@ -7,27 +7,33 @@ Tekengrid:
  7 | 8 | 9 
 
 
+
 8 data bits: xxyyyyzz
 
-xx: bits: 1, 2
+xx - bits: 1, 2
 
-00 - start
-01 - stop
-10 - teken "O"
-11 - teken "X"
-
-
-yyyy: bits: 3, 4, 5, 6
-
-0001 - gridpositie 1
-0010 - gridpositie 2
-0011 - gridpositie 3
-...
-1001 - gridpositie 9
-
-(deze bits zijn enkel relevant als de voorgaande bits (xx) 10 of 11 zijn)
+    00 - start
+    01 - stop
+    10 - teken "O"
+    11 - teken "X"
 
 
-zz: bits: 7, 8
+yyyy - bits: 3, 4, 5, 6
+(deze bits zijn niet relevant als de voorgaande bits (xx) 00 zijn)
 
-altijd 0, geven geen relevante data mee
+    indien xx = 10 of 11 (tekencommando)
+        0001 - gridpositie 1
+        0010 - gridpositie 2
+        0011 - gridpositie 3
+        ...
+        1001 - gridpositie 9
+
+    indien xx = 01 (stopcommando)
+        1000 - x won the game
+        0100 - o won the game
+        1100 - tie game
+
+
+zz - bits: 7, 8
+
+    altijd 0, geven geen relevante data mee

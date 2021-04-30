@@ -3,6 +3,7 @@
 #include <Draw.h>
 #include <Shapes/Circle.h>
 #include <util/delay.h>
+#include <Game.h>
 
 
 bool testCircle(float x1, float y1, bool clockwise, float section, float r, double iterations) {
@@ -39,7 +40,7 @@ bool testPartialCircle(float x1, float y1, bool clockwise, float section, float 
 // Circeltekende functie vanuit beginpunt en straal
 void drawCircle(float x1, float y1, bool clockwise, float section, float r) {
     // Zorg dat alle cirkels even snel getekend worden
-    double iterations = (double)(50*r*section);
+    double iterations = (double)(80*r*section);
     if (testCircle(x1, y1, clockwise, section, r, iterations)){
         double i = 0; // Teller in while-loop
         while( i < iterations) {
@@ -53,6 +54,12 @@ void drawCircle(float x1, float y1, bool clockwise, float section, float r) {
                 // Pas delays aan zodat het OCR register juist kan aangepast worden
                 delay1 = getDelay1(x, y);
                 delay2 = getDelay2(x, y);
+
+                if (True) {
+                    if (penDown) {
+                        delay3 = getCorrectedPencilHeight(x, y, LOW, LOW_OFFSET);
+                    }
+                }
 
                 period_started = 1;
 

@@ -6,4 +6,5 @@
 #define MAX_Y 21.0
 
 bool testCoord(float x, float y);
+float getCorrectedPencilHeight(float x, float y, float low, float offset);
 void goToCoords(float x, float y);

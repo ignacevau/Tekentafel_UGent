@@ -15,11 +15,12 @@
 #define Radius ((LENGTH_BOX - OFFSET) /2)
 // Servo 3
 #define GoHIGH True
-#define HIGH 1.35
+#define HIGH 1.02
 
 #define GoLOW False
-#define LOW 1.25
 
+
+bool penDown;
 
 
 // Hier kunnen we volledige tekeningen maken (door de arm opheffen enzo)
@@ -33,13 +34,17 @@ void setDelay3(bool up){
     
 }
 void elevatePencil(){
+    penDown = False;
     setDelay3(GoHIGH);
     _delay_ms(500);
 }
 void dropPencil(float x, float y){
     goToCoords(x, y);
     _delay_ms(500);
-    setDelay3(GoLOW);
+
+    penDown = True;
+    delay3 = getCorrectedPencilHeight(x, y, LOW, LOW_OFFSET);
+    // setDelay3(GoLOW);
     _delay_ms(500);
 }
 
@@ -61,6 +66,63 @@ void drawGrid() {
 void drawCross(float x, float y){
     drawSingleLine(x - LENGTH_BOX / 2 + OFFSET, y - LENGTH_BOX / 2 + OFFSET, x + LENGTH_BOX / 2 - OFFSET, y + LENGTH_BOX / 2 - OFFSET);
     drawSingleLine(x - LENGTH_BOX / 2 + OFFSET, y + LENGTH_BOX / 2 - OFFSET, x + LENGTH_BOX / 2 - OFFSET, y - LENGTH_BOX / 2 + OFFSET);
+}
+
+void drawWinText(bool x) {
+    // X won
+    if (x) {
+        // Draw X
+        drawSingleLine(2.5, 15.5, 3.5, 14.5);
+        drawSingleLine(2.5, 14.5, 3.5, 15.5);
+    }
+    // O won
+    else {
+        // Draw O
+        dropPencil(3.7, 15);
+        drawCircle(3, 15, True, 1, 0.7);
+        elevatePencil();
+    }
+
+    // w
+    dropPencil(4.5, 15.5);
+    drawLine(4.5, 15.5, 5, 14.5);
+    drawLine(4.9, 14.5, 5.2, 15);
+    drawLine(5.2, 15, 5.5, 15);
+    drawLine(5.5, 14.5, 5.9, 15.5);
+    elevatePencil();
+
+    // i
+    drawSingleLine(6.2, 14.5, 6.2, 15.4);
+    dropPencil(6.2, 15.6);
+    elevatePencil();
+
+    // n
+    dropPencil(6.5, 14.5);
+    drawLine(6.5, 14.5, 6.5, 15.5);
+    drawLine(6.5, 15.5, 7.0, 14.5);
+    drawLine(7.0, 14.5, 7.0, 15.5);
+    elevatePencil();
+
+    // t
+    drawSingleLine(7.3, 15.5, 8.0, 15.5);
+    drawSingleLine(7.7, 15.5, 7.7, 14.5);
+}
+
+void drawTieText() {
+    // t
+    drawSingleLine(3.5, 15.5, 4.3, 15.5);
+    drawSingleLine(3.9, 15.5, 3.9, 14.5);
+
+    // i
+    drawSingleLine(4.5, 14.5, 4.5, 15.4);
+    dropPencil(4.5, 15.6);
+    elevatePencil();
+
+    // e
+    drawSingleLine(4.8, 15.5, 4.8, 14.5);
+    drawSingleLine(4.8, 15.5, 5.3, 15.5);
+    drawSingleLine(4.8, 15, 5.3, 15);
+    drawSingleLine(4.8, 14.5, 5.3, 14.5);
 }
 
 void goToCenter() {
@@ -159,8 +221,22 @@ bool HandleBluetoothCommand(unsigned char data) {
     unsigned char yyyy = (data & 0b00111100)>>2;
 
     // Stop commando
-    if (xx == 0b01)
+    if (xx == 0b01) {
+        // X won
+        if (yyyy == 0b1000) {
+            drawWinText(True);
+        }
+        // O won
+        else if (yyyy == 0b0100) {
+            drawWinText(False);
+        }
+        // Tie game
+        else if (yyyy == 0b1100) {
+            drawTieText();
+        }
+
         return True;
+    }
 
     // Teken X
     if (xx == 0b11) {
@@ -188,7 +264,7 @@ void play() {
 
             bool stop = HandleBluetoothCommand(data);
 
-            if (stop){
+            if (stop) {
                 goToCenter();
                 break;
             }

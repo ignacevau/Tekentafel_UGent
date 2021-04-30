@@ -9,7 +9,7 @@
 
 
 float offset1 = +0.0f;
-float offset2 = -0.11f;
+float offset2 = -0.07f;
 
 /*
 0: periode afwachten

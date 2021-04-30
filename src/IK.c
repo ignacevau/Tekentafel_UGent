@@ -8,9 +8,9 @@ const bool True = 1;
 const float L1 = 12.4f;
 const float L2 = 12.4f;
 
-float delay1 = 0.7f;
-float delay2 = 0.7f;
-float delay3 = 0.7f;
+float delay1 = 1.7f;
+float delay2 = 1.1f;
+float delay3 = 1.05f;
 
 volatile int period_started = 0;
 

@@ -7,6 +7,7 @@ int main(void)
     setRegisters();
     setOCR(PERIODE);
 
+
     while (1)
     {
         // Blijf spel herhalen
