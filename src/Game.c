@@ -12,7 +12,7 @@
 #define START_Y 2.0
 #define OFFSET 0.5
 #define Complete_Circle 1
-#define Radius ((LENGTH_BOX - OFFSET) /2)
+#define Radius ((LENGTH_BOX - 2 * OFFSET) /2)
 // Servo 3
 #define GoHIGH True
 #define HIGH 1.02
