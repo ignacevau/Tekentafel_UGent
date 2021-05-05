@@ -1,3 +1,6 @@
+#ifndef IK_H_
+#define IK_H_
+
 #include <math.h>
 
 #define DISTANCE(x1, y1, x2, y2) sqrt(((x2)-(x1))*((x2)-(x1)) + ((y2)-(y1))*((y2)-(y1)))
@@ -23,3 +26,4 @@ float getDelay1(float x, float y);
 float getDelay2(float x, float y);
 
 volatile int period_started;
+#endif // IK_H_

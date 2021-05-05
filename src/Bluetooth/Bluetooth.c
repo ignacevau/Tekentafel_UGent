@@ -1,6 +1,3 @@
-#ifndef _Bluetooth_
-#define _Bluetooth_
-
 #include <avr/io.h>
 #include <Bluetooth/Bluetooth.h>
 
@@ -19,4 +16,3 @@ void FlushBuffer() {
         dummy = UDR1;
     }
 }
-#endif

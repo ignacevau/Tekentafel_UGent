@@ -1,5 +1,3 @@
-#ifndef _LINE_HEADER_
-#define _LINE_HEADER_
 #include <Draw.h>
 #include <Shapes/Line.h>
 #include <util/delay.h>
@@ -48,4 +46,3 @@ void drawLine(float x1, float y1, float x2, float y2) {
         // Schrijf op boardje dat niet werkt
     }
 }
-#endif

@@ -1,6 +1,5 @@
-#ifndef _Game_Header_
-#define _Game_Header_
 #include <Game.h>
+#include <pen.h>
 #include <Bluetooth/Bluetooth.h>
 #include <avr/io.h>
 #include <Draw.h>
@@ -13,41 +12,9 @@
 #define OFFSET 0.5
 #define Complete_Circle 1
 #define Radius ((LENGTH_BOX - 2 * OFFSET) /2)
-// Servo 3
-#define GoHIGH True
-#define HIGH 1.02
-
-#define GoLOW False
 
 
-bool penDown;
-
-
-// Hier kunnen we volledige tekeningen maken (door de arm opheffen enzo)
-void setDelay3(bool up){
-    if (up){
-        delay3 = HIGH;
-    }
-    else{
-        delay3 = LOW;
-    }
-    
-}
-void elevatePencil(){
-    penDown = False;
-    setDelay3(GoHIGH);
-    _delay_ms(500);
-}
-void dropPencil(float x, float y){
-    goToCoords(x, y);
-    _delay_ms(500);
-
-    penDown = True;
-    delay3 = getCorrectedPencilHeight(x, y, LOW, LOW_OFFSET);
-    // setDelay3(GoLOW);
-    _delay_ms(500);
-}
-
+// Raise the pencil, draw a single line from point 1 to point 2 and raise the pencil again
 void drawSingleLine(float x1, float y1, float x2, float y2) {
     elevatePencil();
     dropPencil(x1, y1);
@@ -55,6 +22,7 @@ void drawSingleLine(float x1, float y1, float x2, float y2) {
     elevatePencil();
 }
 
+// Draw the playing grid for the Tic Tac Toe game
 void drawGrid() {
     drawSingleLine(LENGTH_GRID / 3 + 2, 2, LENGTH_GRID / 3 + 2, 14);
     drawSingleLine(2 * LENGTH_GRID / 3 + 2, 2, 2 * LENGTH_GRID / 3 + 2, 14);
@@ -63,11 +31,14 @@ void drawGrid() {
     goToCenter();
 }
 
+// Draw a cross on the playing grid at the given coordinates
 void drawCross(float x, float y){
     drawSingleLine(x - LENGTH_BOX / 2 + OFFSET, y - LENGTH_BOX / 2 + OFFSET, x + LENGTH_BOX / 2 - OFFSET, y + LENGTH_BOX / 2 - OFFSET);
     drawSingleLine(x - LENGTH_BOX / 2 + OFFSET, y + LENGTH_BOX / 2 - OFFSET, x + LENGTH_BOX / 2 - OFFSET, y - LENGTH_BOX / 2 + OFFSET);
 }
 
+// Write above the playing field who won the game
+// @param x did player X win the game
 void drawWinText(bool x) {
     // X won
     if (x) {
@@ -108,6 +79,7 @@ void drawWinText(bool x) {
     drawSingleLine(7.7, 15.5, 7.7, 14.5);
 }
 
+// Write the text TIE above the playing field
 void drawTieText() {
     // t
     drawSingleLine(3.5, 15.5, 4.3, 15.5);
@@ -125,13 +97,15 @@ void drawTieText() {
     drawSingleLine(4.8, 14.5, 5.3, 14.5);
 }
 
+// Raise the pen and position it above the center of the playing field
 void goToCenter() {
-    // hef op
     elevatePencil();
 
     goToCoords(OFFSET + LENGTH_GRID / 2, OFFSET + LENGTH_GRID / 2);
 }
 
+// Make a move for player X
+// @param BOX int between 1-9 at which grid position the player makes the move
 void playCross(int BOX){
     switch (BOX){
         case 1:
@@ -166,6 +140,8 @@ void playCross(int BOX){
     goToCenter();
 }
 
+// Make a move for player O
+// @param BOX int between 1-9 at which grid position the player makes the move
 void playCircle(int BOX){
     float x = 0;
     float y = 0;
@@ -215,7 +191,9 @@ void playCircle(int BOX){
     goToCenter();
 }
 
-// Returnt True als data het stop commando is
+// Interpret a bluetooth command send by the Android application
+// @param data The bluetooth command (8 bits)
+// @result Returns True if a stop command was given
 bool HandleBluetoothCommand(unsigned char data) {
     unsigned char xx = data >> 6;
     unsigned char yyyy = (data & 0b00111100)>>2;
@@ -250,6 +228,7 @@ bool HandleBluetoothCommand(unsigned char data) {
     return False;
 }
 
+// Start the game loop
 void play() {
     // Center drawing arm
     goToCenter();
@@ -271,4 +250,3 @@ void play() {
         }
     }
 }
-#endif

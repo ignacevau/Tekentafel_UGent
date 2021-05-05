@@ -1,5 +1,3 @@
-#ifndef _RECTANGLE_HEADER_
-#define _RECTANGLE_HEADER_
 #include <Draw.h>
 #include <Shapes/Line.h>
 #include <Shapes/Rectangle.h>
@@ -29,4 +27,3 @@ void drawRectangle(float x1, float y1, float x2, float y2, float x3, float y3) {
         // Schrijf iets op board
     }
 }
-#endif

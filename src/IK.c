@@ -1,5 +1,3 @@
-#ifndef _IK_HEADER_
-#define _IK_HEADER_
 #include <IK.h>
 
 const bool False = 0;
@@ -40,4 +38,3 @@ float getDelay1(float x, float y) {
     float angle = getAlpha1FromCoords(x,y);
     return ((DELAY_PI - DELAY_0) / PI) * angle + DELAY_0;
 }
-#endif

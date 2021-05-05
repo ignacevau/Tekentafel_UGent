@@ -3,6 +3,9 @@
         "ik.h": "c",
         "rectangle.h": "c",
         "draw.h": "c",
-        "line.h": "c"
+        "line.h": "c",
+        "bluetooth.h": "c",
+        "game.h": "c",
+        "bezier.h": "c"
     }
 }

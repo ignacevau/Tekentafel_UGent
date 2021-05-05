@@ -1,6 +1,3 @@
-#ifndef _DW_UTILS_
-#define _DW_UTILS_
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <DwengoUtil.h>
@@ -142,4 +139,3 @@ void setRegisters() {
 void setOCR(float delay) {
     OCR1A = (int)(2000.0f*delay);
 }
-#endif
