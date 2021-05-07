@@ -1,16 +1,16 @@
 #include <Game.h>
 #include <DwengoUtil.h>
 
+
 int main(void)
 {
-    // Zet registers goed
+    // Setup registers
     setRegisters();
     setOCR(PERIODE);
 
-
+    // Start game
     while (1)
     {
-        // Blijf spel herhalen
         play();
     }
 
