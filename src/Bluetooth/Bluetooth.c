@@ -1,15 +1,15 @@
 #include <avr/io.h>
 #include <Bluetooth/Bluetooth.h>
 
+
 unsigned char Bluetooth_Receive() {
-    // Wacht tot er data is
+    // Wait until there is data in the buffer
     while (!(UCSR1A & (1<<RXC1)));
     
-    // Return data uit buffer
+    // Return data from the buffer
     return UDR1;
 }
 
-// Maak de data buffer leeg -> verwijdert ongelezen data!
 void FlushBuffer() {
     unsigned char dummy;
     while ( UCSR1A & (1<<RXC1) ) {

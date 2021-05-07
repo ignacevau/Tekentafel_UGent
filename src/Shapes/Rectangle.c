@@ -1,29 +1,32 @@
 #include <Draw.h>
 #include <Shapes/Line.h>
 #include <Shapes/Rectangle.h>
-#include <Game.h>
+#include <pen.h>
 
 
-bool testRectangle(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
-    if(testCoord(x1, y1) && testCoord(x2,y2) && testCoord(x3, y3) && testCoord(x4, y4)){
+bool testRectangle(struct rectangleOptions options) {
+    float x4 = options.x1 + options.x3 - options.x2;
+    float y4 = options.y1 + options.y3 - options.y2;
+
+    if(testCoord(options.x1, options.y1) && 
+       testCoord(options.x2, options.y2) && 
+       testCoord(options.x3, options.y3) && 
+       testCoord(x4, y4)) {
         return True;
     }
     return False;
 }
 
-// Punt1 and punt3 verbinden een diagonaal van de rechthoek
-void drawRectangle(float x1, float y1, float x2, float y2, float x3, float y3) {
-    float x4 = x1 + x3 - x2;
-    float y4 = y1 + y3 - y2;
-    if (testRectangle(x1, y1, x2, y2, x3, y3, x4, y4)) {
-        dropPencil(x1, y1);
-        drawLine(x1, y1, x2, y2);
-        drawLine(x2, y2, x3, y3);
-        drawLine(x3, y3, x4, y4);
-        drawLine(x4, y4, x1, y1);
+void drawRectangle(struct rectangleOptions options) {
+    float x4 = options.x1 + options.x3 - options.x2;
+    float y4 = options.y1 + options.y3 - options.y2;
+    
+    if (testRectangle(options)) {
+        dropPencil(options.x1, options.y1);
+        drawLine(options.x1, options.y1, options.x2, options.y2);
+        drawLine(options.x2, options.y2, options.x3, options.y3);
+        drawLine(options.x3, options.y3, options.x4, options.y4);
+        drawLine(options.x4, options.y4, options.x1, options.y1);
         elevatePencil();
-    }
-    else{
-        // Schrijf iets op board
     }
 }

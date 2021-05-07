@@ -4,16 +4,19 @@
 #include <IK.h>
 
 
-
+// Offset for delay 1
 float offset1 = +0.0f;
+// Offset for delay 2
 float offset2 = -0.07f;
 
-/*
-0: periode afwachten
-1: eerste delay
-2: tweede delay
-3: derde delay
-*/
+/**
+ * @brief Describes the state of the interrupt-delay routine
+ * 
+ * @tparam 0: Wait for the end of the period
+ * @tparam 1: Waiting for delay 1
+ * @tparam 2: Waiting for delay 2
+ * @tparam 3: Waiting for delay 3
+ */
 volatile int motor_state = 1;
 
 
@@ -21,42 +24,43 @@ volatile int motor_state = 1;
 ISR(TIMER1_COMPA_vect) {
     switch(motor_state) {
         case 0:
-            // Motor 3 uit
+            // Servo 3 low
             PORTF &= ~(1<<PF0);
             
-            // pas OCR-register aan zodat de tijd tot volgende interrupt de 20 ms (periode) volmaakt
+            // Set OCR-register such that the period of 20 ms is waited out
             setOCR(PERIODE-((delay1+offset1)+(delay2+offset2) + delay3));
             motor_state = 1;
 
-            // maken het weer mogelijk om de volgende hoek te berekenen(zie DRAW-functies)
+            // Mark end of the period
             period_started = 0;
             break;
         case 1:
-            // motor 1 aan
+            // Servo 1 high
             PORTC |= (1<<PC0);
 
-            // pas OCR-register aan zodat de tijd tot volgende interrupt de lengte delay 1 bedraagt
+            // Set OCR-register such that the time until the next interrupt is delay 1
             setOCR(delay1+offset1);
             motor_state = 2;
             break;
         case 2:
-            // motor 1 uit
+            // Servo 1 low
             PORTC &= ~(1<<PC0);
 
-            // motor 2 aan
+            // Servo 2 high
             PORTC |= (1<<PC1);
 
-            // pas OCR-register aan zodat de tijd tot volgende interrupt de lengte delay 2 bedraagt
+            // Set OCR-register such that the time until the next interrupt is delay 2
             setOCR(delay2+offset2);
             motor_state = 3;
             break;
         case 3:
-            // Motor 3 aan
-            PORTF |= 1<<PF0;
-            // motor 2 uit
+            // Servo 2 low
             PORTC &= ~(1<<PC1);
+
+            // Servo 3 high
+            PORTF |= 1<<PF0;
             
-            // pas OCR-register aan zodat de tijd tot volgende interrupt de lengte delay 3 bedraagt
+            // Set OCR-register such that the time until the next interrupt is delay 3
             setOCR(delay3);
             motor_state = 0;
             break;
@@ -65,35 +69,32 @@ ISR(TIMER1_COMPA_vect) {
 
 
 void setRegisters() {
+    SREG |= (1<<SREG_I); // Enable global interrupts
 
-    DDRA |= 0xFF;  // Leds als output
-    PORTA = 0x00;  // Leds uit
-    // PORTA = 0xFF;    // Leds aan
-
-
-    // Zet servo's 1 en 2 (motoren van tekenarm) op output
+    // SERVOS
+#pragma region SERVOS
+    // Set servos 1 and 2 (control the drawing arm) to output
     DDRC |= (1<<PC0) | (1<<PC1);
-    // Zet servo's uit (geen puls)
+    // Set servos to low (no pulse)
     PORTC &= ~(1<<PC0) & ~(1<<PC1);
 
-    // Zet servo 3 (motor van stift) op output
+    // Set servo 3 (controls the pencil) to output
     DDRF |= (1<<PF0);
-    // Zet servo 3 uit (geen puls)
+    // Set servo 3 to low (no pulse)
     PORTF &= ~(1<<PF0);
+#pragma endregion /SERVOS
 
-
-    SREG |= (1<<SREG_I); // Zet global interrupts aan
     
-    // TIMER INTERRUPT
-    TIMSK1 |= (1<<OCIE1A);  // Gebruik Output Compare A Match-interrupt
+#pragma region TIMER_INTERRUPT
+    TIMSK1 |= (1<<OCIE1A);  // Use Output Compare A Match-interrupt
 
-    // Zet mode op CNC
-    TCCR1A &= ~_BV(WGM10); // WGM10 moet 0 zijn
-    TCCR1A &= ~_BV(WGM11); // WGM11 moet 0 zijn
-    TCCR1B |= _BV(WGM12);  // WGM12 moet 1 zijn
-    TCCR1B &= ~_BV(WGM13); // WGM13 moet 0 zijn
+    // Set mode to CNC
+    TCCR1A &= ~_BV(WGM10);
+    TCCR1A &= ~_BV(WGM11);
+    TCCR1B |= _BV(WGM12);
+    TCCR1B &= ~_BV(WGM13);
 
-    // Zet prescaling op clk
+    // Set prescaling to clk-0
     /*
     clock frequency is 16MHz
     scaling of 1 --> 16 MHz
@@ -101,9 +102,10 @@ void setRegisters() {
     TCCR1B &= ~_BV(CS12);
     TCCR1B &= ~_BV(CS10);
     TCCR1B |= _BV(CS11);
+#pragma endregion /TIMER_INTERRUPT
 
 
-    // BLUETOOTH
+#pragma region BLUETOOTH
     // Asynchronous USART
     UCSR1C &= ~_BV(UMSEL11);
     UCSR1C &= ~_BV(UMSEL10);
@@ -133,9 +135,9 @@ void setRegisters() {
 
     // Enable data receiving
     UCSR1B |= _BV(RXEN1);
+#pragma endregion /BLUETOOTH
 }
 
-// Deze functie zet het OCR-register op een bepaalde waarde in functie van de prescaling (zie setRegisters) en van de delays (zie ISR)
 void setOCR(float delay) {
     OCR1A = (int)(2000.0f*delay);
 }
