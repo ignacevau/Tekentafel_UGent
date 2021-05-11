@@ -1,20 +1,19 @@
-#include <Game.h>
+#include <game.h>
 #include <pen.h>
-#include <Bluetooth/Bluetooth.h>
+#include <bluetooth/bluetooth.h>
 #include <avr/io.h>
-#include <Draw.h>
+#include <draw.h>
 #include <util/delay.h>
-#include <Shapes/Bezier.h>
-#include <Shapes/Circle.h>
-#include <Shapes/Line.h>
-#include <Shapes/Rectangle.h>
+#include <shapes/bezier.h>
+#include <shapes/circle.h>
+#include <shapes/line.h>
+#include <shapes/rectangle.h>
 
 #define LENGTH_GRID 12.0
 #define LENGTH_BOX (LENGTH_GRID/3)
 #define START_X 2.0
 #define START_Y 2.0
 #define OFFSET 0.5
-#define Complete_Circle 1
 #define Radius ((LENGTH_BOX - 2 * OFFSET) /2)
 
 
@@ -81,7 +80,7 @@ static void drawTieText();
  * @param data The bluetooth command (8 bits)
  * @result Returns True if a stop command was given
  */
-static bool HandleBluetoothCommand(unsigned char data)
+static bool HandleBluetoothCommand(unsigned char data);
 
 
 static void drawSingleLine(float x1, float y1, float x2, float y2) {
@@ -185,7 +184,15 @@ static void playCircle(int BOX){
 
     elevatePencil();
     dropPencil(x+Radius, y+Radius);
-    drawCircle(x, y+Radius, False, Complete_Circle, Radius);
+
+    struct circleOptions options;
+    options.x0 = x;
+    options.y0 = y+Radius;
+    options.clockwise = False;
+    options.section = 1;
+    options.r = Radius;
+    drawCircle(options);
+
     elevatePencil();
 
     goToCenter();
@@ -208,7 +215,15 @@ static void drawWinText(bool x) {
     else {
         // Draw letter O
         dropPencil(3.7, 15);
-        drawCircle(3, 15, True, 1, 0.7);
+        
+        struct circleOptions options;
+        options.x0 = 3;
+        options.y0 = 15;
+        options.clockwise = True;
+        options.section = 1;
+        options.r = 0.7;
+        drawCircle(options);
+
         elevatePencil();
     }
 

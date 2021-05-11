@@ -1,6 +1,6 @@
-#include <Draw.h>
-#include <Shapes/Line.h>
-#include <Shapes/Rectangle.h>
+#include <draw.h>
+#include <shapes/line.h>
+#include <shapes/rectangle.h>
 #include <pen.h>
 
 
@@ -25,8 +25,8 @@ void drawRectangle(struct rectangleOptions options) {
         dropPencil(options.x1, options.y1);
         drawLine(options.x1, options.y1, options.x2, options.y2);
         drawLine(options.x2, options.y2, options.x3, options.y3);
-        drawLine(options.x3, options.y3, options.x4, options.y4);
-        drawLine(options.x4, options.y4, options.x1, options.y1);
+        drawLine(options.x3, options.y3, x4, y4);
+        drawLine(x4, y4, options.x1, options.y1);
         elevatePencil();
     }
 }

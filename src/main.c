@@ -1,5 +1,5 @@
-#include <Game.h>
-#include <DwengoUtil.h>
+#include <game.h>
+#include <dwengo_util.h>
 
 
 int main(void)

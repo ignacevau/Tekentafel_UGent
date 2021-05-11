@@ -6,6 +6,10 @@
         "line.h": "c",
         "bluetooth.h": "c",
         "game.h": "c",
-        "bezier.h": "c"
+        "bezier.h": "c",
+        "dwengo_util.h": "c",
+        "delay.h": "c",
+        "circle.h": "c",
+        "pen.h": "c"
     }
 }

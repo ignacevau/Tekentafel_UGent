@@ -1,5 +1,5 @@
-#include <Draw.h>
-#include <Shapes/Circle.h>
+#include <draw.h>
+#include <shapes/circle.h>
 #include <util/delay.h>
 #include <pen.h>
 
@@ -8,8 +8,8 @@ bool testCircle(struct circleOptions options, double iterations) {
     double i = 0; // Counter in while-loop
     while( i < iterations) {  
         float t = (i*(2*PI) * options.section * (options.clockwise?-1:1))/iterations;
-        float x = r * cos(t) + options.x0;
-        float y = r * sin(t) + options.y0;
+        float x = options.r * cos(t) + options.x0;
+        float y = options.r * sin(t) + options.y0;
         if (!testCoord(x, y)){
             return False;
         }
@@ -23,8 +23,8 @@ bool testCircleFromPoint(struct circleOptions options, double iterations, double
     double i = 0; // Counter in while-loop
     while( i < iterations) { 
         float t = (i*(2*PI) * options.section * (options.clockwise?-1:1))/iterations + beginangle;
-        float x = r * cos(t) + options.x0;
-        float y = r * sin(t) + options.y0;
+        float x = options.r * cos(t) + options.x0;
+        float y = options.r * sin(t) + options.y0;
         if (!testCoord(x, y)){
             return False;
         }
@@ -39,14 +39,14 @@ void drawCircle(struct circleOptions options) {
     // Calculate amount of iterations to assure that every circle gets drawn
     // at the same speed
     double iterations = (double)(80*options.r*options.section);
-    if (testCircle(options.x0, options.y0, options.clockwise, options.section, options.r, iterations)){
+    if (testCircle(options, iterations)){
         double i = 0; // Counter in while-loop
         while( i < iterations) {
             if (!period_started) {  // Wait until the 20ms period is over (ISR)
                 
                 float t = (i*(2*PI) * options.section * (options.clockwise?-1:1))/iterations;
-                float x = r * cos(t) + options.x0;
-                float y = r * sin(t) + options.y0;
+                float x = options.r * cos(t) + options.x0;
+                float y = options.r * sin(t) + options.y0;
                 
                 // Set delays so that the OCR register can be set correctly
                 delay1 = getDelay1(x, y);

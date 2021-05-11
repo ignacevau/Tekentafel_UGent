@@ -19,7 +19,7 @@ typedef struct rectangleOptions {
     float y2;
     float x3;
     float y3;
-}
+};
 
 
 /**

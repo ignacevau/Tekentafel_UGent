@@ -1,37 +1,26 @@
 #include <pen.h>
-#include <Draw.h>
+#include <util/delay.h>
 
-// Servo 3
-#define GoHIGH True
+// The delay needed for servo3 to rise the pencil from the board
 #define HIGH 1.02
 
-#define GoLOW False
 
-bool penDown;
-
-
-// Hier kunnen we volledige tekeningen maken (door de arm opheffen enzo)
-void setDelay3(bool up){
-    if (up){
-        delay3 = HIGH;
-    }
-    else{
-        delay3 = LOW;
-    }
-    
-}
-
-void elevatePencil(){
+void elevatePencil() {
     penDown = False;
-    setDelay3(GoHIGH);
+    delay3 = HIGH;
+
+    // Give time for the pencil to go up
     _delay_ms(500);
 }
-void dropPencil(float x, float y){
+
+void dropPencil(float x, float y) {
     goToCoords(x, y);
+    // Give time for the pencil to reach the coords
     _delay_ms(500);
 
     penDown = True;
     delay3 = getCorrectedPencilHeight(x, y, LOW, LOW_OFFSET);
-    // setDelay3(GoLOW);
+
+    // Give time for the pencil to go down
     _delay_ms(500);
 }

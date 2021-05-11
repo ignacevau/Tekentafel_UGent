@@ -1,5 +1,5 @@
 #include <avr/io.h>
-#include <Bluetooth/Bluetooth.h>
+#include <bluetooth/bluetooth.h>
 
 
 unsigned char Bluetooth_Receive() {

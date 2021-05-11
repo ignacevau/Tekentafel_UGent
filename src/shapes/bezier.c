@@ -1,5 +1,5 @@
-#include <Draw.h>
-#include <Shapes/Bezier.h>
+#include <draw.h>
+#include <shapes/bezier.h>
 #include <util/delay.h>
 #include <pen.h>
 

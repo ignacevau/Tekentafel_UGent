@@ -1,5 +1,5 @@
-#include <Draw.h>
-#include <Shapes/Line.h>
+#include <draw.h>
+#include <shapes/line.h>
 #include <util/delay.h>
 #include <pen.h>
 
