@@ -1,0 +1,16 @@
+- lcd scherm toont instructies bv: tekenarm gaat buiten maximaal bereik
+
+
+
+opmerkingen:
+    -delay bij tekenen?
+
+eindproject:
+    - oxo spelen met knopjes
+    - svg files tekenen
+    - portret tekenen
+
+
+verslag (mogelijks in latex)
+- goeie template vinden
+- op het einde besluit

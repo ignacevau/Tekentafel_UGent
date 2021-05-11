@@ -1,0 +1,26 @@
+schrijfwijze
+liever inleding dan absract
+inleiding langer en algemener
+overzicht --> overzicht, alle problemen opstellen
+toepassing alles samen brengen
+opmaak formules (sterretjes is concolutie) en italics
+latex /techtt voor register ipv italics
+text onder formule niet italics
+register hoeven niet vermeld
+schematisch van onze code
+capabel
+verwoording
+definitie servo
+dc motor die nauwkeuring onder specifieke hoek kan draaien
+expansionshield
+schets
+workspace van servomotor voor ik
+regsiter inter - aansturen servos
+dan pas ik en calibratie
+i/o overbodig
+tabel prescaling overbodig
+puntjes ipv scrabbels
+lijnstukken ipv rechten
+apart zelfreflectie
+conclusie herhaling, geen nieuwe elementen
+zwart wit mogelijks
