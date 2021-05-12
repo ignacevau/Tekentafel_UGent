@@ -1,21 +1,19 @@
 //TODO:
 
 schrijfwijze
-inleiding langer en algemener
+inleiding langer en algemener                             //nog vervoledigen
 overzicht --> overzicht, alle problemen opstellen
 toepassing alles samen brengen
-opmaak formules (sterretjes is concolutie) en italics
-latex /techtt voor register ipv italics
+opmaak formules (sterretjes is concolutie) en italics     //normaal meeste ok
+latex /techtt voor register ipv italics                   //normaal meeste ok
 register hoeven niet vermeld
 schematisch van onze code
-verwoording
-schets
 regsiter inter - aansturen servos
 dan pas ik en calibratie
-i/o overbodig
-puntjes ipv scrabbels
-apart zelfreflectie
-conclusie herhaling, geen nieuwe elementen
+i/o overbodig                                       ??
+puntjes ipv scrabbels                               ??
+apart zelfreflectie                                       //nog vervoledigen
+conclusie herhaling, geen nieuwe elementen                //nog vervoledigen
 
 //DONE:
 zwart wit mogelijks
