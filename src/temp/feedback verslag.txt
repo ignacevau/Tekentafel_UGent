@@ -6,7 +6,6 @@ overzicht --> overzicht, alle problemen opstellen
 toepassing alles samen brengen
 opmaak formules (sterretjes is concolutie) en italics
 latex /techtt voor register ipv italics
-text onder formule niet italics
 register hoeven niet vermeld
 schematisch van onze code
 verwoording
@@ -14,7 +13,6 @@ schets
 regsiter inter - aansturen servos
 dan pas ik en calibratie
 i/o overbodig
-tabel prescaling overbodig
 puntjes ipv scrabbels
 apart zelfreflectie
 conclusie herhaling, geen nieuwe elementen
@@ -28,6 +26,6 @@ expansionshield
 lijnstukken ipv rechten
 capabel
 workspace van servomotor voor ik
-
-
+text onder formule niet italics
+tabel prescaling overbodig
 
