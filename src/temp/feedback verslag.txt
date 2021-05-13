@@ -1,12 +1,11 @@
 //TODO:
-
-schrijfwijze
-toepassing alles samen brengen                            ??
-opmaak formules (sterretjes is concolutie) en italics     //normaal meeste ok
+toepassing alles samen brengen                            // idk wat dit betekent, maar zal wel in orde zijn
 
 
 
 //DONE:
+schrijfwijze
+opmaak formules (sterretjes is concolutie) en italics     //normaal meeste ok
 inleiding langer en algemener                             //nog vervoledigen
 overzicht --> overzicht, alle problemen opstellen         // inleiding moet overzicht zijn van alle problemen
 latex /texttt voor register ipv italics                   //normaal meeste ok
