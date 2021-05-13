@@ -2,20 +2,22 @@
 
 schrijfwijze
 inleiding langer en algemener                             //nog vervoledigen
-overzicht --> overzicht, alle problemen opstellen
-toepassing alles samen brengen
+overzicht --> overzicht, alle problemen opstellen         // inleiding moet overzicht zijn van alle problemen
+toepassing alles samen brengen                            ??
 opmaak formules (sterretjes is concolutie) en italics     //normaal meeste ok
-latex /techtt voor register ipv italics                   //normaal meeste ok
-register hoeven niet vermeld
-schematisch van onze code
-regsiter inter - aansturen servos
-dan pas ik en calibratie
-i/o overbodig                                       ??
-puntjes ipv scrabbels                               ??
-apart zelfreflectie                                       //nog vervoledigen
-conclusie herhaling, geen nieuwe elementen                //nog vervoledigen
+
+
 
 //DONE:
+latex /texttt voor register ipv italics                   //normaal meeste ok
+schematisch van onze code
+register hoeven niet vermeld
+regsiter inter - aansturen servos
+dan pas ik en calibratie                                  // niet meer van toepassing
+apart zelfreflectie                                       //nog vervoledigen
+conclusie herhaling, geen nieuwe elementen                //nog vervoledigen
+i/o overbodig                                       ??
+puntjes ipv scrabbels                               ??    // gaat over die pulse-figuur
 zwart wit mogelijks
 liever inleding dan absract
 definitie servo
@@ -26,4 +28,3 @@ capabel
 workspace van servomotor voor ik
 text onder formule niet italics
 tabel prescaling overbodig
-
