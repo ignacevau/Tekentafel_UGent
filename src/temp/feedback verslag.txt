@@ -1,14 +1,14 @@
 //TODO:
 
 schrijfwijze
-inleiding langer en algemener                             //nog vervoledigen
-overzicht --> overzicht, alle problemen opstellen         // inleiding moet overzicht zijn van alle problemen
 toepassing alles samen brengen                            ??
 opmaak formules (sterretjes is concolutie) en italics     //normaal meeste ok
 
 
 
 //DONE:
+inleiding langer en algemener                             //nog vervoledigen
+overzicht --> overzicht, alle problemen opstellen         // inleiding moet overzicht zijn van alle problemen
 latex /texttt voor register ipv italics                   //normaal meeste ok
 schematisch van onze code
 register hoeven niet vermeld
