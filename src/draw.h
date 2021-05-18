@@ -2,6 +2,10 @@
 #define DRAW_H_
 
 #include <IK.h>
+#include <shapes/bezier.h>
+#include <shapes/circle.h>
+#include <shapes/line.h>
+#include <shapes/rectangle.h>
 
 #define MIN_X 0.0
 #define MIN_Y 2.0

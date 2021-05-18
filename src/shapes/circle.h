@@ -2,6 +2,9 @@
 #define SHAPES_CIRCLE_H_
 
 
+#include <IK.h>
+
+
 /**
  * @brief Options given to bezier functions to define the bezier curve
  * 

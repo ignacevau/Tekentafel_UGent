@@ -2,6 +2,9 @@
 #define SHAPES_LINE_H_
 
 
+#include <IK.h>
+
+
 /**
  * @brief Tests whether the line stays within the allowed boundaries
  * 

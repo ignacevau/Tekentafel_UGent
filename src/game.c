@@ -4,10 +4,6 @@
 #include <avr/io.h>
 #include <draw.h>
 #include <util/delay.h>
-#include <shapes/bezier.h>
-#include <shapes/circle.h>
-#include <shapes/line.h>
-#include <shapes/rectangle.h>
 
 #define LENGTH_GRID 12.0
 #define LENGTH_BOX (LENGTH_GRID/3)

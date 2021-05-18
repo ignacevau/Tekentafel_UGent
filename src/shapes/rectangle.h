@@ -2,6 +2,9 @@
 #define SHAPES_RECTANGLE_H_
 
 
+#include <IK.h>
+
+
 /**
  * @brief Options given to rectangle functions to define the rectangle
  * 
